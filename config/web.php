@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name'=>'application',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -12,16 +13,42 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'response' => [
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+
+                if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
+
+                    $response->data = [
+
+                        'data' => $response->data,
+                        'statusCode'=>$response->statusCode
+                    ];
+                }else{
+
+                    $response->data = [
+                        'statusCode'=>$response->statusCode,
+                        'data' => $response->data,
+                    ];
+
+                }
+            },
+        ],
         'request' => [
+            'baseUrl' => '',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => '63dQXMZEV3PjhMPR7qBgumzqVXFaxvR3',
+            /*'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]*/
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
