@@ -14,6 +14,7 @@ use \yii\db\ActiveRecord;
  * @property string $email
  * @property int $status
  * @property int $user_type_id
+ * @property int $phone
  * @property int $created_at
  * @property int $updated_at
  *
@@ -45,7 +46,7 @@ class User extends ActiveRecord
     {
         return [
             [['username', 'password', 'email', 'user_type_id', 'created_at'], 'required'],
-            [['status', 'user_type_id', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'user_type_id', 'created_at','phone', 'updated_at'], 'integer'],
             [['username', 'password', 'email'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['email'], 'unique'],
@@ -74,6 +75,7 @@ class User extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
+            'phone' => Yii::t('app', 'phone'),
             'password' => Yii::t('app', 'Password'),
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
