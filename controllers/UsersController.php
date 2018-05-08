@@ -1,6 +1,11 @@
 <?php
 namespace app\controllers;
+use app\models\User;
 use yii\rest\ActiveController;
+use sngrl\PhpFirebaseCloudMessaging\Client;
+use sngrl\PhpFirebaseCloudMessaging\Message;
+use sngrl\PhpFirebaseCloudMessaging\Notification;
+use sngrl\PhpFirebaseCloudMessaging\Recipient\Device;
 use yii;
 class UsersController extends ActiveController{
     public $modelClass = 'app\models\User';
@@ -62,5 +67,62 @@ class UsersController extends ActiveController{
                 'params' => $requestParams,
             ],
         ]);
+    }
+
+    public function actionLogin(){
+
+        if(\Yii::$app->request->getIsPost()){
+            $username = \Yii::$app->request->post('username');
+            $password = \Yii::$app->request->post('password');
+
+            return ['user'=>User::find()->where(['username'=>$username,'password'=>$password])->one()];
+
+        }
+        return ['valid'=>false,'message'=>'please check is post request'];
+    }
+
+
+    public function actionNotifications(){
+        if(!\Yii::$app->request->getIsPost()){
+            return ['valid'=>false,'status'=>400,'message'=>'not found request'];
+
+        }
+        if(!\Yii::$app->request->post('user_id')){
+            return ['valid'=>false,'status'=>400,'message'=>'not found user id'];
+
+        }
+
+        if(!\Yii::$app->request->post('message')){
+            return ['valid'=>false,'status'=>400,'message'=>'not found message'];
+
+        }
+
+        $user = User::find()->where(['id'=>\Yii::$app->request->post('user_id')])->one();
+
+        if(empty($user)){
+            return ['valid'=>false,'status'=>400,'message'=>'user not found'];
+
+        }
+
+        if(empty($user->token_id)){
+            return ['valid'=>false,'status'=>400,'message'=>'token is empty'];
+
+        }
+
+        $server_key = \Yii::$app->params['FirebaseNotifications'];
+        $client = new Client();
+        $client->setApiKey($server_key);
+        $client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+
+        $message = new Message();
+        $message->setPriority('high');
+        $message->addRecipient(new Device($user->token_id));
+        $message
+            ->setNotification(new Notification('notification',\Yii::$app->request->post('message')))
+            //->setData(['key' => 'value'])
+        ;
+
+        $response = $client->send($message);
+        return ['status'=>$response->getStatusCode(),'body'=>$response->getBody()];
     }
 }

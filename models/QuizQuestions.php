@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $quiz_id
  * @property string $title
  * @property int $created_at
+ * @property int $mark
  * @property int $updated_at
  *
  * @property Quiz $quiz
@@ -54,7 +55,7 @@ class QuizQuestions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['quiz_id', 'title', 'created_at'], 'required'],
+            [['quiz_id', 'title', 'created_at','mark'], 'required'],
             [['quiz_id', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string'],
             [['quiz_id'], 'exist', 'skipOnError' => true, 'targetClass' => Quiz::className(), 'targetAttribute' => ['quiz_id' => 'id']],
@@ -70,6 +71,7 @@ class QuizQuestions extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'quiz_id' => Yii::t('app', 'Quiz ID'),
             'title' => Yii::t('app', 'Title'),
+            'mark' => Yii::t('app', 'mark'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

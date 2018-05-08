@@ -51,7 +51,7 @@ class ToolsController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-        $query->with(['teacher']);
+        $query->with(['teacher','courses']);
 
 
 

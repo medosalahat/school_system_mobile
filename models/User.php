@@ -12,6 +12,7 @@ use \yii\db\ActiveRecord;
  * @property string $username
  * @property string $password
  * @property string $email
+ * @property string $token_id
  * @property int $status
  * @property int $user_type_id
  * @property int $phone
@@ -45,9 +46,10 @@ class User extends ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password', 'email', 'user_type_id', 'created_at'], 'required'],
+            [['username', 'password', 'email','phone', 'user_type_id', 'created_at'], 'required'],
             [['status', 'user_type_id', 'created_at','phone', 'updated_at'], 'integer'],
             [['username', 'password', 'email'], 'string', 'max' => 255],
+            [['token_id'], 'string'],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['user_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserType::className(), 'targetAttribute' => ['user_type_id' => 'id']],

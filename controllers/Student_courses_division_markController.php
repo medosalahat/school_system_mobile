@@ -8,8 +8,8 @@
 namespace app\controllers;
 use yii\rest\ActiveController;
 use yii;
-class Courses_divisionController extends ActiveController{
-    public $modelClass = 'app\models\CoursesDivision';
+class Student_courses_division_markController extends ActiveController{
+    public $modelClass = 'app\models\StudentCoursesDivisionMark';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -30,17 +30,16 @@ class Courses_divisionController extends ActiveController{
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
 
-
         $filter = null;
-
-            $this->dataFilter = new yii\data\DataFilter();
+        if ($this->dataFilter !== null) {
+            $this->dataFilter = Yii::createObject($this->dataFilter);
             if ($this->dataFilter->load($requestParams)) {
                 $filter = $this->dataFilter->build();
                 if ($filter === false) {
                     return $this->dataFilter;
                 }
             }
-
+        }
 
         if ($this->prepareDataProvider !== null) {
             return call_user_func($this->prepareDataProvider, $this, $filter);
@@ -51,11 +50,10 @@ class Courses_divisionController extends ActiveController{
 
         $query = $modelClass::find();
 
-        
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-        $query->with(['chatGroups','courses','division','teacher','homeWorks','quizzes','studentCoursesDivisions']);
+        $query->with(['studentCoursesDivision']);
 
 
 
