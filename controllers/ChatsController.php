@@ -53,6 +53,14 @@ class ChatsController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['sender_id']) and !empty($_GET['sender_id']) ){
+
+            $query->andFilterWhere(['=','sender_id',$_GET['sender_id']]);
+        }
+        if(isset($_GET['reciver_id']) and !empty($_GET['reciver_id']) ){
+
+            $query->andFilterWhere(['=','reciver_id',$_GET['reciver_id']]);
+        }
         $query->with(['reciver','sender']);
 
 

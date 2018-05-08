@@ -117,6 +117,7 @@
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
 			"order": [
 				"d642a4a1-6ca7-368c-fcc1-b6dde78f85d4",
+				"3953ce74-99bb-b2a3-15d5-080515e8ed87",
 				"598d0d0f-c684-efb1-75dd-c97eb1eae973",
 				"cac82203-2d5e-7035-0282-98d3f884856e",
 				"35b6438f-c139-41d4-7dfb-a33c57dddcaf",
@@ -358,7 +359,7 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=chats&expand=reciver,sender",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=chats&expand=reciver,sender&reciver_id=2&sender_id=1",
 			"folder": "cc30caa2-3728-08bf-dd01-51dc041158db",
 			"queryParams": [
 				{
@@ -371,6 +372,20 @@
 				{
 					"key": "expand",
 					"value": "reciver,sender",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "reciver_id",
+					"value": "2",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "sender_id",
+					"value": "1",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -394,7 +409,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525572501626,
+			"time": 1525799735848,
 			"name": "Chat",
 			"description": "",
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
@@ -1365,6 +1380,52 @@
 			"responses": []
 		},
 		{
+			"id": "3953ce74-99bb-b2a3-15d5-080515e8ed87",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost/school_system_mobile/web/index.php?r=users/for_get_password&user_id=7",
+			"folder": "1870be3d-6a5b-69e0-8b37-124d9725691a",
+			"queryParams": [
+				{
+					"key": "r",
+					"value": "users/for_get_password",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "user_id",
+					"value": "7",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [
+				{
+					"key": "username",
+					"value": "123123123123123",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1525799492356,
+			"name": "for get password",
+			"description": "",
+			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
+			"responses": []
+		},
+		{
 			"id": "39abfdfb-72a7-5013-c33e-42d32a990fe5",
 			"headers": "Content-Type: application/x-www-form-urlencoded\n",
 			"headerData": [
@@ -1989,7 +2050,7 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=student_courses_division&expand=attendances,quizStudentsAnswers,student,coursesDivision,studentQuestionnaireAnswers",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=student_courses_division&expand=attendances,quizStudentsAnswers,student,coursesDivision,studentQuestionnaireAnswers&student_id=3&courses_division_id=2",
 			"folder": "cc30caa2-3728-08bf-dd01-51dc041158db",
 			"queryParams": [
 				{
@@ -2002,6 +2063,20 @@
 				{
 					"key": "expand",
 					"value": "attendances,quizStudentsAnswers,student,coursesDivision,studentQuestionnaireAnswers",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "student_id",
+					"value": "3",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "courses_division_id",
+					"value": "2",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -2025,7 +2100,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525578280416,
+			"time": 1525797289665,
 			"name": "Student courses division",
 			"description": "",
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
@@ -2261,7 +2336,7 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=courses&expand=coursesDivisions",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=courses&expand=coursesDivisions&id=1",
 			"folder": "cc30caa2-3728-08bf-dd01-51dc041158db",
 			"queryParams": [
 				{
@@ -2274,6 +2349,13 @@
 				{
 					"key": "expand",
 					"value": "coursesDivisions",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "1",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -2297,7 +2379,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525573726897,
+			"time": 1525797110011,
 			"name": "courses",
 			"description": "",
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
@@ -3540,7 +3622,7 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=student_family&expand=user,family",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=student_family&expand=user,family&family_id=4&user_id=2",
 			"folder": "cc30caa2-3728-08bf-dd01-51dc041158db",
 			"queryParams": [
 				{
@@ -3553,6 +3635,20 @@
 				{
 					"key": "expand",
 					"value": "user,family",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "family_id",
+					"value": "4",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "user_id",
+					"value": "2",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -3576,7 +3672,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525575773565,
+			"time": 1525797177154,
 			"name": "student family",
 			"description": "",
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
@@ -5440,12 +5536,12 @@
 					"enabled": true
 				}
 			],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=users&expand=chats,chats0,coursesDivisions,notes,notes0,studentCoursesDivisions,studentFamilies,studentFamilies0,userType",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=users/index&expand=chats,chats0,coursesDivisions,notes,notes0,studentCoursesDivisions,studentFamilies,studentFamilies0,userType&user_type_id=1",
 			"folder": "cc30caa2-3728-08bf-dd01-51dc041158db",
 			"queryParams": [
 				{
 					"key": "r",
-					"value": "users",
+					"value": "users/index",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -5453,6 +5549,13 @@
 				{
 					"key": "expand",
 					"value": "chats,chats0,coursesDivisions,notes,notes0,studentCoursesDivisions,studentFamilies,studentFamilies0,userType",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "user_type_id",
+					"value": "1",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -5476,7 +5579,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525578076248,
+			"time": 1525797112357,
 			"name": "users",
 			"description": "",
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
@@ -5613,19 +5716,33 @@
 			"id": "cac82203-2d5e-7035-0282-98d3f884856e",
 			"headers": "",
 			"headerData": [],
-			"url": "http://localhost/school_system_mobile/web/index.php?r=time_teacher/view&id=1",
+			"url": "http://localhost/school_system_mobile/web/index.php?r=courses_division/index&teacher_id=sfdsfsdfsfdsf&course_id=1&expand=chatGroups,courses,division,teacher,homeWorks,quizzes,studentCoursesDivisions",
 			"folder": "1870be3d-6a5b-69e0-8b37-124d9725691a",
 			"queryParams": [
 				{
 					"key": "r",
-					"value": "time_teacher/view",
+					"value": "courses_division/index",
 					"equals": true,
 					"description": "",
 					"enabled": true
 				},
 				{
-					"key": "id",
+					"key": "teacher_id",
+					"value": "sfdsfsdfsfdsf",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "course_id",
 					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "expand",
+					"value": "chatGroups,courses,division,teacher,homeWorks,quizzes,studentCoursesDivisions",
 					"equals": true,
 					"description": "",
 					"enabled": true
@@ -5640,8 +5757,7 @@
 					"key": "username",
 					"value": "123123123123123",
 					"type": "text",
-					"enabled": true,
-					"description": ""
+					"enabled": true
 				}
 			],
 			"dataMode": "urlencoded",
@@ -5649,9 +5765,9 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1525739455561,
-			"name": "time teacher copy",
-			"description": "",
+			"time": 1525797131092,
+			"name": "courses_division",
+			"description": null,
 			"collectionId": "f94c6c80-31be-9e8f-9a42-bfc6d913a296",
 			"responses": []
 		},

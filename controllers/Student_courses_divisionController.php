@@ -53,6 +53,17 @@ class Student_courses_divisionController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+
+        if(isset($_GET['courses_division_id']) and !empty($_GET['courses_division_id']) ){
+
+            $query->andFilterWhere(['=','courses_division_id',$_GET['courses_division_id']]);
+        }
+
+        if(isset($_GET['student_id']) and !empty($_GET['student_id']) ){
+
+            $query->andFilterWhere(['=','student_id',$_GET['student_id']]);
+        }
+
         $query->with(['attendances','quizStudentsAnswers','student','coursesDivision','studentQuestionnaireAnswers']);
 
 

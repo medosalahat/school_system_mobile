@@ -1,11 +1,13 @@
 <?php
 namespace app\controllers;
+use app\helpers\users;
 use app\models\User;
 use yii\rest\ActiveController;
 use sngrl\PhpFirebaseCloudMessaging\Client;
 use sngrl\PhpFirebaseCloudMessaging\Message;
 use sngrl\PhpFirebaseCloudMessaging\Notification;
 use sngrl\PhpFirebaseCloudMessaging\Recipient\Device;
+
 use yii;
 class UsersController extends ActiveController{
     public $modelClass = 'app\models\User';
@@ -52,6 +54,12 @@ class UsersController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+
+        if(isset($_GET['user_type_id']) and !empty($_GET['user_type_id']) ){
+
+            $query->andFilterWhere(['=','user_type_id',$_GET['user_type_id']]);
+        }
+
         $query->with(['chats','chats0','coursesDivisions','notes','notes0','studentCoursesDivisions','studentFamilies','studentFamilies0','userType']);
 
 
@@ -124,5 +132,10 @@ class UsersController extends ActiveController{
 
         $response = $client->send($message);
         return ['status'=>$response->getStatusCode(),'body'=>$response->getBody()];
+    }
+
+    public function actionFor_get_password(){
+
+        return users::forGetPassword();
     }
 }

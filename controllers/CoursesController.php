@@ -54,6 +54,10 @@ class CoursesController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['id']) and !empty($_GET['id']) ){
+
+            $query->andFilterWhere(['=','id',$_GET['id']]);
+        }
         $query->with(['coursesDivisions']);
 
 

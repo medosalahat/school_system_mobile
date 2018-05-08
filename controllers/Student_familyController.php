@@ -54,6 +54,15 @@ class Student_familyController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['user_id']) and !empty($_GET['user_id']) ){
+
+            $query->andFilterWhere(['=','user_id',$_GET['user_id']]);
+        }
+
+        if(isset($_GET['family_id']) and !empty($_GET['family_id']) ){
+
+            $query->andFilterWhere(['=','family_id',$_GET['family_id']]);
+        }
         $query->with(['user','family']);
 
 

@@ -16,6 +16,7 @@ use \yii\db\ActiveRecord;
  * @property int $status
  * @property int $user_type_id
  * @property int $phone
+ * @property int $for_get
  * @property int $created_at
  * @property int $updated_at
  *

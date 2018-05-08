@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3671dce5cb58a7419a956aadabab4154",
-    "content-hash": "79571b55ef646192c461189f9e3fddf5",
+    "hash": "a7fac7a0930784e172bb1d86c23fb293",
+    "content-hash": "b8b9bfe174777c29c3f41e53b8dd69e8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -595,6 +595,52 @@
             "time": "2018-01-23 07:37:21"
         },
         {
+            "name": "twilio/sdk",
+            "version": "5.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "f59405409b9060103f7ae1d52d3d4c05400eb90e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/f59405409b9060103f7ae1d52d3d4c05400eb90e",
+                "reference": "f59405409b9060103f7ae1d52d3d4c05400eb90e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.1",
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twilio\\": "Twilio/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio API Team",
+                    "email": "api@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2018-04-28 21:16:28"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "dev-master",
             "source": {
@@ -604,7 +650,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/bdd05785c508d4c03665cefda2ccc55c57fa561e",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/2d3d0c73db5c5f18d607418a2485bd11c2a10887",
                 "reference": "bdd05785c508d4c03665cefda2ccc55c57fa561e",
                 "shasum": ""
             },

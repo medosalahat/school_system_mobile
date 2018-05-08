@@ -30,35 +30,38 @@ class Courses_divisionController extends ActiveController{
             $requestParams = Yii::$app->getRequest()->getQueryParams();
         }
 
-
         $filter = null;
-
-            $this->dataFilter = new yii\data\DataFilter();
+        if ($this->dataFilter !== null) {
+            $this->dataFilter = Yii::createObject($this->dataFilter);
             if ($this->dataFilter->load($requestParams)) {
                 $filter = $this->dataFilter->build();
                 if ($filter === false) {
                     return $this->dataFilter;
                 }
             }
-
+        }
 
         if ($this->prepareDataProvider !== null) {
             return call_user_func($this->prepareDataProvider, $this, $filter);
         }
 
+
         /* @var $modelClass \yii\db\BaseActiveRecord */
         $modelClass = $this->modelClass;
 
+
         $query = $modelClass::find();
 
-        
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['teacher_id']) and !empty($_GET['teacher_id'])  )
+            $query->andFilterWhere(['=','teacher_id',$_GET['teacher_id']]);
+
+        if(isset($_GET['course_id']) and !empty($_GET['course_id']) )
+            $query->andFilterWhere(['=','courses_id',$_GET['course_id']]);
+
         $query->with(['chatGroups','courses','division','teacher','homeWorks','quizzes','studentCoursesDivisions']);
-
-
-
 
         return Yii::createObject([
             'class' => yii\data\ActiveDataProvider::className(),
