@@ -54,6 +54,8 @@ class Quiz_questions_answersController extends ActiveController{
         }
         $query->with(['quizQuestions','quizStudentsAnswers']);
 
+        if(isset($_GET['quiz_questions_id']) and !empty($_GET['quiz_questions_id']) )
+            $query->andFilterWhere(['=','quiz_questions_id',$_GET['quiz_questions_id']]);
 
 
 
@@ -67,5 +69,19 @@ class Quiz_questions_answersController extends ActiveController{
                 'params' => $requestParams,
             ],
         ]);
+    }
+
+    public function actionGet_answers(){
+        if(isset($_GET['quiz_questions_id']) and !empty($_GET['quiz_questions_id']) ){
+
+            $sql ="SELECT quiz_questions_answers.* FROM `quiz_questions_answers`
+                   INNER JOIN quiz_questions on quiz_questions.id= quiz_questions_answers.quiz_questions_id 
+                   WHERE quiz_questions.quiz_id =".$_GET['quiz_questions_id'];
+            return  Yii::$app->db->createCommand($sql)->queryAll();
+        }else{
+            return 'not found quiz id';
+        }
+
+
     }
 }
