@@ -1,8 +1,9 @@
 <?php
 
 namespace app\models;
+
 use Yii;
-use app\models\UserQuery;
+use app\models\UsersQuery;
 use yii\behaviors\TimestampBehavior;
 use \yii\db\ActiveRecord;
 /**
@@ -177,5 +178,12 @@ class User extends ActiveRecord
         return $this->hasOne(UserType::className(), ['id' => 'user_type_id']);
     }
 
-
+    /**
+     * @inheritdoc
+     * @return CoursesQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UsersQuery(get_called_class());
+    }
 }
