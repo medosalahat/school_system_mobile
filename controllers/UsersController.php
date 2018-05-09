@@ -168,7 +168,7 @@ class UsersController extends ActiveController{
         return users::forGetPassword();
     }
 
-    public function actionResetPassword(){
+    public function actionReset_password(){
         return users::resetPassword();
 
     }

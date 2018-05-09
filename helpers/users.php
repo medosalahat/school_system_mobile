@@ -22,15 +22,15 @@ class users
             return 'Please make sure the request is GET';
         }
 
-        if (empty(\Yii::$app->request->getQueryParam('username'))) {
-            return 'Please make sure the request contains the user_id parameter ';
+        if (empty(\Yii::$app->request->getQueryParam('phone'))) {
+            return 'Please make sure the request contains the phone parameter ';
         }
 
         /**@var $user User */
-        $user = User::find()->where(['username' => \Yii::$app->request->getQueryParam('username')])->one();
+        $user = User::find()->where(['phone' => \Yii::$app->request->getQueryParam('phone')])->one();
 
         if (empty($user)) {
-            return 'user username found ' . \Yii::$app->request->getQueryParam('username');
+            return 'user phone found ' . \Yii::$app->request->getQueryParam('phone');
         }
 
         if (empty($user->phone)) {
@@ -208,8 +208,8 @@ class users
             return 'Please make sure the request is POSt';
         }
 
-        if (empty(\Yii::$app->request->getBodyParam('user_id'))) {
-            return 'Please make sure the request contains the user_id parameter ';
+        if (empty(\Yii::$app->request->getBodyParam('phone'))) {
+            return 'Please make sure the request contains the phone parameter ';
         }
 
          if (empty(\Yii::$app->request->getBodyParam('code'))) {
@@ -221,8 +221,10 @@ class users
         }
 
         /**@var $user User */
-        $user = User::find()->where(['id' => \Yii::$app->request->getQueryParam('user_id')])->one();
-
+        $user = User::find()->where(['phone' => \Yii::$app->request->getQueryParam('phone')])->one();
+        if (empty($user)) {
+            return 'user phone not found ' . \Yii::$app->request->getQueryParam('phone');
+        }
 
         if(($user->for_get==\Yii::$app->request->getBodyParam('code')) and !empty(\Yii::$app->request->getBodyParam('password'))){
 
