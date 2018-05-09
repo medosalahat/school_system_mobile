@@ -7,6 +7,7 @@
  */
 namespace app\helpers;
 
+use app\models\StudentFamily;
 use app\models\User;
 use Twilio\Exceptions\EnvironmentException;
 use Twilio\Rest\Client;
@@ -76,6 +77,170 @@ class users
             ];
         }
 
+
+    }
+
+
+    public static function For_send_message()
+    {
+
+        if (!\Yii::$app->request->getIsGet()) {
+            return 'Please make sure the request is GET';
+        }
+
+        if (empty(\Yii::$app->request->getQueryParam('phone'))) {
+            return 'Please make sure the request contains the phone parameter ';
+        }
+
+        if (empty(\Yii::$app->request->getQueryParam('message'))) {
+            return 'Please make sure the request contains the message parameter ';
+        }
+
+
+        $data = \Yii::$app->params['twilio'];
+        $sid = $data['id']; // Your Account SID from www.twilio.com/console
+        $token = $data['token']; // Your Auth Token from www.twilio.com/console
+        $client = new Client($sid, $token);
+        $text = \Yii::$app->request->getQueryParam('message');
+        $phone = \Yii::$app->request->getQueryParam('phone');
+        if(empty(strstr($phone,'+'))){
+            $phone='+'.$phone;
+        }
+        try {
+            $message = $client->messages->create(
+            // '+962798981496', // Text this number
+                $phone, // Text this number
+                [
+                    'from' => $data['phone'], // From a valid Twilio number
+                    'body' => $text
+                ]
+            );
+            return [
+                'status' => 200,
+                'phone' => $phone,
+                'message' => $text,
+                'sid' => $message->sid,
+                'send' => true,
+
+                'response' => 'Sms delivery success'
+            ];
+
+        } catch (EnvironmentException $e) {
+            return [
+                'status' => 400,
+                'phone' =>  $phone,
+                'message' => $text,
+                'sid' => null,
+                'send' => false,
+
+                'response' => $e->getMessage()
+            ];
+        }
+
+
+    }
+
+    public static function For_attendance($student_id)
+    {
+
+        if (!\Yii::$app->request->getIsGet()) {
+            return 'Please make sure the request is GET';
+        }
+
+
+        /**@var $user User */
+        $user = User::find()->where(['id'=>$student_id])->one();
+
+        $f = StudentFamily::find()->where(['user_id'=>$user->id])->one();
+        $f->family->phone;
+
+        $data = \Yii::$app->params['twilio'];
+        $sid = $data['id']; // Your Account SID from www.twilio.com/console
+        $token = $data['token']; // Your Auth Token from www.twilio.com/console
+        $client = new Client($sid, $token);
+        $text = ' لم يتم حضور الطالب ';
+        $text .=$user->username;
+        $text .=' بتاريخ  ';
+        $text .=date('Y-m-d');
+
+        $phone =$f->family->phone;
+        if(empty(strstr($phone,'+'))){
+            $phone='+'.$phone;
+        }
+        try {
+            $message = $client->messages->create(
+            // '+962798981496', // Text this number
+                $phone, // Text this number
+                [
+                    'from' => $data['phone'], // From a valid Twilio number
+                    'body' => $text
+                ]
+            );
+            return [
+                'status' => 200,
+                'phone' => $phone,
+                'message' => $text,
+                'sid' => $message->sid,
+                'send' => true,
+                'user'=>$user->attributes,
+                'response' => 'Sms delivery success'
+            ];
+
+        } catch (EnvironmentException $e) {
+            return [
+                'status' => 400,
+                'phone' =>  $phone,
+                'message' => $text,
+                'sid' => null,
+                'send' => false,
+                'user'=>$user->attributes,
+                'response' => $e->getMessage()
+            ];
+        }
+
+
+    }
+
+
+    public static function resetPassword(){
+
+        if (!\Yii::$app->request->getIsPost()) {
+            return 'Please make sure the request is POSt';
+        }
+
+        if (empty(\Yii::$app->request->getBodyParam('user_id'))) {
+            return 'Please make sure the request contains the user_id parameter ';
+        }
+
+         if (empty(\Yii::$app->request->getBodyParam('code'))) {
+            return 'Please make sure the request contains the code parameter ';
+        }
+
+        if (empty(\Yii::$app->request->getBodyParam('password'))) {
+            return 'Please make sure the request contains the password parameter ';
+        }
+
+        /**@var $user User */
+        $user = User::find()->where(['id' => \Yii::$app->request->getQueryParam('user_id')])->one();
+
+
+        if(($user->for_get==\Yii::$app->request->getBodyParam('code')) and !empty(\Yii::$app->request->getBodyParam('password'))){
+
+            $user->password = \Yii::$app->request->getBodyParam('password');
+            $user->update(true,['password']);
+            return [
+                'valid'=>1,
+                'message' =>  'تم تغيل كلمة المرور بنجاح',
+
+            ];
+        }else{
+            return [
+                'valid'=>0,
+                'message' =>"لم يتم تغيل كلمة المرور ",
+                'errors' =>$user->getFirstErrors(),
+
+            ];
+        }
 
     }
 }

@@ -157,7 +157,7 @@ class UsersController extends ActiveController{
             FROM `courses_division`
             INNER JOIN division on division.id = courses_division.division_id
             INNER JOIN classroom on classroom.id = division.classroom_id
-            WHERE courses_division.teacher_id ='.$User->id.'
+            WHERE courses_division.teacher_id ='.$User->id.' GROUP by `division_id`
         ';
 
         return  Yii::$app->db->createCommand($query)->queryAll();
@@ -166,5 +166,15 @@ class UsersController extends ActiveController{
     public function actionFor_get_password(){
 
         return users::forGetPassword();
+    }
+
+    public function actionResetPassword(){
+        return users::resetPassword();
+
+    }
+
+    public function actionFor_send_message(){
+
+        return users::For_send_message();
     }
 }
