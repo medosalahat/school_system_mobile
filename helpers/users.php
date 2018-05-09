@@ -22,15 +22,15 @@ class users
             return 'Please make sure the request is GET';
         }
 
-        if (empty(\Yii::$app->request->getQueryParam('user_id'))) {
+        if (empty(\Yii::$app->request->getQueryParam('username'))) {
             return 'Please make sure the request contains the user_id parameter ';
         }
 
         /**@var $user User */
-        $user = User::find()->where(['id' => \Yii::$app->request->getQueryParam('user_id')])->one();
+        $user = User::find()->where(['username' => \Yii::$app->request->getQueryParam('username')])->one();
 
         if (empty($user)) {
-            return 'user id not found ' . \Yii::$app->request->getQueryParam('user_id');
+            return 'user username found ' . \Yii::$app->request->getQueryParam('username');
         }
 
         if (empty($user->phone)) {
