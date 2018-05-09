@@ -3,19 +3,19 @@
  * Created by PhpStorm.
  * User: salahat
  * Date: 21/04/18
- * Time: 09:25 م
+ * Time: 09:08 م
  */
-
-//StudentCoursesDivisionController
 namespace app\controllers;
 use yii\rest\ActiveController;
 use yii;
-class Student_courses_divisionController extends ActiveController{
-    public $modelClass = 'app\models\StudentCoursesDivision';
+class General_user_questionnaire_answersController extends ActiveController{
+    public $modelClass = 'app\models\GeneralUserQuestionnaireAnswers';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
     ];
+
+
     public function actions() {
         $actions = parent::actions();
         unset($actions[ 'index']);
@@ -53,18 +53,7 @@ class Student_courses_divisionController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-
-        if(isset($_GET['courses_division_id']) and !empty($_GET['courses_division_id']) ){
-
-            $query->andFilterWhere(['=','courses_division_id',$_GET['courses_division_id']]);
-        }
-
-        if(isset($_GET['student_id']) and !empty($_GET['student_id']) ){
-
-            $query->andFilterWhere(['=','student_id',$_GET['student_id']]);
-        }
-
-        $query->with(['quizStudentsAnswers','student','coursesDivision','studentQuestionnaireAnswers']);
+        $query->with(['generalQuestionnaireAnswers','generalQuestionnaireAnswers']);
 
 
 
@@ -80,4 +69,8 @@ class Student_courses_divisionController extends ActiveController{
             ],
         ]);
     }
+
+
+
+
 }

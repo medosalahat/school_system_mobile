@@ -14,7 +14,6 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Attendance[] $attendances
  * @property QuizStudentsAnswers[] $quizStudentsAnswers
  * @property User $student
  * @property CoursesDivision $coursesDivision
@@ -78,13 +77,6 @@ class StudentCoursesDivision extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAttendances()
-    {
-        return $this->hasMany(Attendance::className(), ['student_courses_division_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery

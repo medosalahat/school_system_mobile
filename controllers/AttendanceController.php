@@ -53,7 +53,7 @@ class AttendanceController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-        $query->with(['studentCoursesDivision']);
+        $query->with(['student']);
 
 
 

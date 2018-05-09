@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 use app\helpers\users;
+use app\models\CoursesDivision;
 use app\models\User;
 use yii\rest\ActiveController;
 use sngrl\PhpFirebaseCloudMessaging\Client;
@@ -132,6 +133,34 @@ class UsersController extends ActiveController{
 
         $response = $client->send($message);
         return ['status'=>$response->getStatusCode(),'body'=>$response->getBody()];
+    }
+
+    public function actionGet_by_other_user(){
+        $requestParams = Yii::$app->getRequest()->getQueryParams();
+
+        if(  !isset($requestParams['teacher_id'])){
+            return ['valid'=>400,'message'=>'please add parameter teacher_id'];
+        }
+        $User= User::find()->where(['id'=>$requestParams['teacher_id']])->one();
+
+        if(empty($User)){
+            return ['valid'=>400,'message'=>'please check teacher id'];
+        }
+
+
+
+        $query='
+            SELECT 
+            courses_division.id,
+            division.title as division_title,
+            classroom.title as classroom_title
+            FROM `courses_division`
+            INNER JOIN division on division.id = courses_division.division_id
+            INNER JOIN classroom on classroom.id = division.classroom_id
+            WHERE courses_division.teacher_id ='.$User->id.'
+        ';
+
+        return  Yii::$app->db->createCommand($query)->queryAll();
     }
 
     public function actionFor_get_password(){
