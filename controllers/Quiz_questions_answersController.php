@@ -72,12 +72,25 @@ class Quiz_questions_answersController extends ActiveController{
     }
 
     public function actionGet_answers(){
-        if(isset($_GET['quiz_questions_id']) and !empty($_GET['quiz_questions_id']) ){
+        if(isset($_GET['quiz_id']) and !empty($_GET['quiz_id']) ){
 
+            $sql ="SELECT quiz_questions.* FROM `quiz_questions` WHERE quiz_questions.quiz_id =".$_GET['quiz_id'];
+            $q=  Yii::$app->db->createCommand($sql)->queryAll();
             $sql ="SELECT quiz_questions_answers.* FROM `quiz_questions_answers`
                    INNER JOIN quiz_questions on quiz_questions.id= quiz_questions_answers.quiz_questions_id 
-                   WHERE quiz_questions.quiz_id =".$_GET['quiz_questions_id'];
-            return  Yii::$app->db->createCommand($sql)->queryAll();
+                   WHERE quiz_questions.quiz_id =".$_GET['quiz_id'];
+            $ans=  Yii::$app->db->createCommand($sql)->queryAll();
+            foreach ($q as $index=>$item) {
+                $id = $item['id'];
+                foreach ($ans as $in=>$s){
+                    if($s['quiz_questions_id']==$id){
+                        $q[$index]['answers'][]=$s;
+                    }
+                }
+            }
+
+            return $q;
+
         }else{
             return 'not found quiz id';
         }
