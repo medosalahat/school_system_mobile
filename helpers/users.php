@@ -221,7 +221,8 @@ class users
         }
 
         /**@var $user User */
-        $user = User::find()->where(['phone' => \Yii::$app->request->getQueryParam('phone')])->one();
+        $user = User::find()->where(['phone' => \Yii::$app->request->getBodyParam('phone')])->one();
+       
         if (empty($user)) {
             return 'user phone not found ' . \Yii::$app->request->getQueryParam('phone');
         }
