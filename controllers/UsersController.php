@@ -153,7 +153,7 @@ class UsersController extends ActiveController{
             SELECT 
             courses_division.id,
             division.title as division_title,
-            division.id as id,
+            division.id as division_id,
             classroom.title as classroom_title
             FROM `courses_division`
             INNER JOIN division on division.id = courses_division.division_id
