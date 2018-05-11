@@ -51,7 +51,7 @@ class Time_teacherController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
-        $query->with(['courses','teacher']);
+        $query->with(['teacher']);
 
 
         if(isset($_GET['teacher_id']) and !empty($_GET['teacher_id']) ){
