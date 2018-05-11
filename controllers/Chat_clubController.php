@@ -60,7 +60,10 @@ class Chat_clubController extends ActiveController{
 
         if(isset($_GET['club_student_id']) and !empty($_GET['club_student_id'])  )
             $query->andFilterWhere(['=','club_student_id',$_GET['club_student_id']]);
-        $query->with(['clubStudent','sender']);
+
+        if(isset($_GET['club_id']) and !empty($_GET['club_id'])  )
+            $query->andFilterWhere(['=','club_id',$_GET['club_id']]);
+        $query->with(['clubStudent','sender','club']);
 
 
 

@@ -11,11 +11,13 @@ use Yii;
  * @property string $message
  * @property int $sender_id
  * @property int $club_student_id
+ * @property int $club_id
  * @property int $created_at
  * @property int $updated_at
  *
  * @property User $sender
  * @property ClubStudent $clubStudent
+ * @property Club $club
  */
 class ChatClub extends \yii\db\ActiveRecord
 {
@@ -45,11 +47,12 @@ class ChatClub extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message', 'sender_id', 'club_student_id', 'created_at'], 'required'],
+            [['message','club_id', 'sender_id', 'club_student_id', 'created_at'], 'required'],
             [['message'], 'string'],
             [['sender_id', 'club_student_id', 'created_at', 'updated_at'], 'integer'],
             [['sender_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sender_id' => 'id']],
             [['club_student_id'], 'exist', 'skipOnError' => true, 'targetClass' => ClubStudent::className(), 'targetAttribute' => ['club_student_id' => 'id']],
+            [['club_id'], 'exist', 'skipOnError' => true, 'targetClass' => Club::className(), 'targetAttribute' => ['club_id' => 'id']],
         ];
     }
 
@@ -82,6 +85,14 @@ class ChatClub extends \yii\db\ActiveRecord
     public function getClubStudent()
     {
         return $this->hasOne(ClubStudent::className(), ['id' => 'club_student_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClub()
+    {
+        return $this->hasOne(Club::className(), ['id' => 'club_id']);
     }
 
     /**
