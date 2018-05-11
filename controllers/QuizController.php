@@ -6,6 +6,7 @@
  * Time: 09:08 م
  */
 namespace app\controllers;
+use app\models\CoursesDivision;
 use app\models\Quiz;
 use app\models\StudentCoursesDivision;
 use yii\rest\ActiveController;
@@ -147,4 +148,119 @@ class QuizController extends ActiveController{
 
          */
     }
+
+
+    public function actionStart_of_week(){
+
+
+        $requestParams = Yii::$app->getRequest()->getQueryParams();
+
+        if(!isset($requestParams['courses_division_id'])  ){
+            return ['valid'=>400,'message'=>'please add parameter courses_division_id'];
+        }
+        $CoursesDivision= CoursesDivision::find()->where(['id'=>$requestParams['courses_division_id']])->one();
+
+        if(empty($CoursesDivision)){
+            return ['valid'=>400,'message'=>'please check courses_division_id'];
+        }
+
+
+        $from = strtotime("previous Saturday");
+        $to = strtotime("previous thursday");
+
+        $query='
+           SELECT
+              SUM(quiz_questions.mark) AS marks,
+              student_courses_division.student_id,
+              user.username
+            FROM
+              `quiz`
+            INNER JOIN
+              quiz_questions ON quiz_questions.quiz_id = quiz.id
+            INNER JOIN
+              quiz_questions_answers ON quiz_questions_answers.quiz_questions_id = quiz_questions.id
+            INNER JOIN
+              quiz_students_answers ON quiz_students_answers.quiz_questions_answers_id = quiz_questions_answers.id
+            INNER JOIN
+              student_courses_division ON quiz_students_answers.student_courses_division_id = student_courses_division.id
+            INNER JOIN
+              user ON student_courses_division.student_id = user.id
+            WHERE
+              quiz_questions_answers.is_true = 1 and  `student_courses_division`.`courses_division_id`="'.$CoursesDivision->id.'"   
+              and (quiz.created_at BETWEEN "'.$from.'" AND "'.$to.'")
+            GROUP BY
+              student_courses_division.student_id
+            ORDER BY
+              marks DESC
+        ';
+
+        $data =  Yii::$app->db->createCommand($query)->queryAll();
+        $ids= [];
+        foreach ($data as $item) {
+            $ids[]=$item['student_id'];
+        }
+        $q2= 'SELECT
+                  COUNT(attendance.is_available) as counters,
+                  attendance.student_id
+                FROM
+                  `attendance`
+                WHERE
+                  (
+                    UNIX_TIMESTAMP(attendance.`date`) BETWEEN "'.$from.'" AND "'.$to.'"
+                  ) AND attendance.is_available = 0 /*AND  `id` IN (' . implode(',', $ids) . ')*/
+                GROUP BY
+                  attendance.student_id
+                   ORDER BY
+              counters DESC
+                  ';
+
+
+        $data3 =  Yii::$app->db->createCommand($q2)->queryAll();
+
+        if(empty($data3)){
+            reset($data);
+            return  array_shift($data);
+        }
+
+        if(!empty($data3)){
+            reset($data);
+
+            foreach ($data as $index=>$student) {
+
+                if(isset($student['student_id'])){
+                    foreach ($data3 as $item) {
+                        if(isset($item['student_id']) and $item['student_id']==$student['student_id']){
+                            $data[$index]['marks']-=$item['counters'];
+                        }else{
+                            $data[$index]['counter']=0;
+                        }
+                    }
+                }
+            }
+
+
+
+            foreach ($data as $key => $row)
+            {
+                $vc_array_name[$key] = $row['marks'];
+            }
+            array_multisort($vc_array_name, SORT_ASC, $data);
+
+
+
+        }
+
+
+
+        if(empty($data)){
+            return ['valid'=>400,'message'=>'not found any answers for this student'];
+        }
+
+        return  array_shift($data)  ;
+        /**
+
+         */
+    }
+
+
 }
