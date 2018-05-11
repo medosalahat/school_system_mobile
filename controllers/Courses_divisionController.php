@@ -61,6 +61,9 @@ class Courses_divisionController extends ActiveController{
         if(isset($_GET['course_id']) and !empty($_GET['course_id']) )
             $query->andFilterWhere(['=','courses_id',$_GET['course_id']]);
 
+        if(isset($_GET['division_id']) and !empty($_GET['division_id']) )
+            $query->andFilterWhere(['=','division_id',$_GET['division_id']]);
+
         $query->with(['chatGroups','courses','division','teacher','homeWorks','quizzes','studentCoursesDivisions']);
 
         return Yii::createObject([
