@@ -51,6 +51,19 @@ class ToolsController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+
+
+        if(isset($_GET['teacher_id']) and !empty($_GET['teacher_id']) ){
+
+            $query->andFilterWhere(['=','teacher_id',$_GET['teacher_id']]);
+        }
+
+        if(isset($_GET['courses_id']) and !empty($_GET['courses_id']) ){
+
+            $query->andFilterWhere(['=','courses_id',$_GET['courses_id']]);
+        }
+
+
         $query->with(['teacher','courses']);
 
 

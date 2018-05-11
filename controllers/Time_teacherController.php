@@ -54,6 +54,10 @@ class Time_teacherController extends ActiveController{
         $query->with(['courses','teacher']);
 
 
+        if(isset($_GET['teacher_id']) and !empty($_GET['teacher_id']) ){
+
+            $query->andFilterWhere(['=','teacher_id',$_GET['teacher_id']]);
+        }
 
 
         return Yii::createObject([

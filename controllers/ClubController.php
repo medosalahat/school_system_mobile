@@ -53,6 +53,9 @@ class ClubController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['teacher_id']) and !empty($_GET['teacher_id'])  )
+            $query->andFilterWhere(['=','teacher_id',$_GET['teacher_id']]);
+
         $query->with(['teacher','clubStudents']);
 
 
