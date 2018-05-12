@@ -164,6 +164,36 @@ class UsersController extends ActiveController{
         return  Yii::$app->db->createCommand($query)->queryAll();
     }
 
+
+    public function actionGet_teachers(){
+        $requestParams = Yii::$app->getRequest()->getQueryParams();
+
+        if(  !isset($requestParams['student_id'])){
+            return ['valid'=>400,'message'=>'please add parameter student_id'];
+        }
+        $User= User::find()->where(['id'=>$requestParams['student_id']])->one();
+
+        if(empty($User)){
+            return ['valid'=>400,'message'=>'please check student id'];
+        }
+
+        $query='
+            SELECT 
+                user.id as user_id,
+                user.username as user_username,
+                user.email as user_email,
+                courses.id as courses_id,
+                courses.title as courses_title
+                FROM `student_courses_division`
+                INNER JOIN `courses_division` on courses_division.id = student_courses_division.courses_division_id
+                INNER JOIN `user` on user.id = courses_division.teacher_id
+                INNER JOIN `courses` on courses.id = courses_division.courses_id
+                WHERE student_courses_division.student_id='.$User->id.'
+        ';
+
+        return  Yii::$app->db->createCommand($query)->queryAll();
+    }
+
     public function actionFor_get_password(){
 
         return users::forGetPassword();

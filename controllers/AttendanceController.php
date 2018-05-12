@@ -53,6 +53,10 @@ class AttendanceController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        if(isset($_GET['student_id']) and !empty($_GET['student_id']) ){
+
+            $query->andFilterWhere(['=','student_id',$_GET['student_id']]);
+        }
         $query->with(['student']);
 
 
