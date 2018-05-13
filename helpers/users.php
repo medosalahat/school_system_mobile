@@ -29,14 +29,10 @@ class users
         /**@var $user User */
         $user = User::find()->where(['phone' => \Yii::$app->request->getQueryParam('phone')])->one();
 
-        if (empty($user)) {
-            $user = User::find()->where(['phone' => \Yii::$app->request->getQueryParam('phone')])->one();
-
-        }
 
         if (empty($user)) {
             $phone=\Yii::$app->request->getQueryParam('phone');
-            if(empty(strstr(\Yii::$app->request->getQueryParam('phone'),'+'))){
+            if(empty(strstr($phone,'+'))){
                 $phone='+'.\Yii::$app->request->getQueryParam('phone');
             }
             $user = User::find()->where(['phone' =>$phone ])->one();
