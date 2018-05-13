@@ -53,6 +53,12 @@ class Student_courses_division_markController extends ActiveController{
         if (!empty($filter)) {
             $query->andWhere($filter);
         }
+        //student_courses_division_id
+
+        if(isset($_GET['student_courses_division_id']) and !empty($_GET['student_courses_division_id']) ){
+
+            $query->andFilterWhere(['=','student_courses_division_id',$_GET['student_courses_division_id']]);
+        }
         $query->with(['studentCoursesDivision']);
 
 
