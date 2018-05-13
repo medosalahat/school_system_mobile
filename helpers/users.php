@@ -55,7 +55,7 @@ class users
         $sid = $data['id']; // Your Account SID from www.twilio.com/console
         $token = $data['token']; // Your Auth Token from www.twilio.com/console
         $client = new Client($sid, $token);
-        $text = "$rand is your school system for rest password code";
+        $text = "$rand";
         $phone=$user->phone;
         if(empty(strstr($phone,'+'))){
             $phone='+'.$phone;
