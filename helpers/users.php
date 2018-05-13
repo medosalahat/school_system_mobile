@@ -56,10 +56,14 @@ class users
         $token = $data['token']; // Your Auth Token from www.twilio.com/console
         $client = new Client($sid, $token);
         $text = "$rand is your school system for rest password code";
+        $phone=$user->phone;
+        if(empty(strstr($phone,'+'))){
+            $phone='+'.$phone;
+        }
         try {
             $message = $client->messages->create(
             // '+962798981496', // Text this number
-                $user->phone, // Text this number
+                $phone, // Text this number
                 [
                     'from' => $data['phone'], // From a valid Twilio number
                     'body' => $text
