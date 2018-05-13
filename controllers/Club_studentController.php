@@ -61,7 +61,7 @@ class Club_studentController extends ActiveController{
 
 
 
-        if(isset($_GET['is_active']) and !empty($_GET['is_active'])  )
+        if(isset($_GET['is_active'])  )
             $query->andFilterWhere(['=','is_active',$_GET['is_active']]);
 
 
